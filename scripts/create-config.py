@@ -6,7 +6,7 @@ import time
 import requests
 
 api_url = "https://api.mullvad.net/www/relays/all/"
-relay_list_filename = "./tmp/relay_list.json"
+relay_list_filename = os.getenv("RELAY_FILE_LOCATION", "./tmp/relay_list.json")
 relay_list_expiry = 60 * 60 * 24  # 24 hours
 all_relays = {}
 
