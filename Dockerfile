@@ -11,7 +11,7 @@ FROM alpine
 COPY --from=build /usr/src/wireproxy/wireproxy /usr/bin/wireproxy
 
 ENV CONFIG_LOCATION="./config.conf"
-ENV RELAY_FILE_LOCATION="./config.conf"
+ENV RELAY_FILE_LOCATION="./relay_list.json"
 ENV TIMEOUT="5m"
 
 WORKDIR /usr/src/app
