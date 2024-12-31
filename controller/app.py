@@ -96,6 +96,7 @@ def reset_if_needed():
     global fail_count, success_count, last_reset
 
     if time.time() - last_reset > failure_check_time:
+        print(f"Fail count: {fail_count}, Success count: {success_count}")
         if fail_count > 5 and fail_count > success_count:
             # Try a new server
             start_proxy()
