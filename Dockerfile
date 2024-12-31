@@ -15,11 +15,13 @@ ENV RELAY_FILE_LOCATION="./relay_list.json"
 ENV TIMEOUT="5m"
 
 WORKDIR /usr/src/app
-COPY ./scripts /usr/src/app/
+COPY ./controller /usr/src/app/
 
-RUN apk add python3 py3-requests
+RUN apk add --no-cache python3 py3-pip
+RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
 
-ENTRYPOINT [ "/usr/src/app/start.sh" ]
+ENTRYPOINT [ "python3" ]
+CMD [ "/usr/src/app/app.py" ]
 
 LABEL org.opencontainers.image.title="wireproxy with rotation"
 LABEL org.opencontainers.image.description="Wireguard client that exposes itself as a socks5 proxy"

@@ -6,3 +6,4 @@
 *.conf
 
 tmp
+.vscode
