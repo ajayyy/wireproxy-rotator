@@ -20,6 +20,9 @@ COPY ./controller /usr/src/app/
 RUN apk add --no-cache python3 py3-pip cargo
 RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
 
+# Force unbuffered output to stdout
+ENV PYTHONUNBUFFERED=1 
+
 ENTRYPOINT [ "python3" ]
 CMD [ "/usr/src/app/app.py" ]
 
