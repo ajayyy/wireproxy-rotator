@@ -12,7 +12,7 @@ COPY --from=build /usr/src/wireproxy/wireproxy /usr/bin/wireproxy
 
 ENV CONFIG_LOCATION="./config.conf"
 ENV RELAY_FILE_LOCATION="./relay_list.json"
-ENV TIMEOUT="5m"
+ENV TIMEOUT="3600"
 
 WORKDIR /usr/src/app
 COPY ./controller /usr/src/app/
