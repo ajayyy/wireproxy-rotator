@@ -134,8 +134,8 @@ signal.signal(signal.SIGINT, signal_handler)
 signal.signal(signal.SIGALRM, alarm_handler)
 
 if __name__ == "__main__":
-    # Init
-    start_proxy()
-
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000, log_level="warning")
+else:
+    # Run init in uvicon version of file
+    start_proxy()
