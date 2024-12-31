@@ -21,7 +21,7 @@ address = os.getenv("ADDRESS")
 dns = os.getenv("DNS", "10.64.0.1")
 allowed_ips = os.getenv("ALLOWED_IPS", "0.0.0.0/0,::0/0")
 wait_time = int(os.getenv("TIMEOUT", str(60 * 60))) # 1 hour
-failure_check_time = int(os.getenv("FAIL_CHECK_TIME", str(60))) # 1 hour
+failure_check_time = int(os.getenv("FAIL_CHECK_TIME", str(60))) # 1 minute
 
 if not private_key or not address:
     print("Missing required environment variables")
@@ -72,16 +72,17 @@ def pick_relay():
 
     print(f"Created a config to connect to {chosen_relay['country_name']} ({chosen_relay['city_name']}) - {public_key}")
 
-    return relays[random.randrange(0, len(relays))]
-
 proxy_process = None
 
 def start_proxy():
     global proxy_process
 
     if proxy_process:
-        proxy_process.terminate()
         signal.alarm(0)
+        proxy_process.terminate()
+        
+        # Wait for the process to terminate
+        proxy_process.wait()
 
     pick_relay()
 
