@@ -17,7 +17,7 @@ ENV TIMEOUT="5m"
 WORKDIR /usr/src/app
 COPY ./controller /usr/src/app/
 
-RUN apk add --no-cache python3 py3-pip
+RUN apk add --no-cache python3 py3-pip cargo
 RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
 
 ENTRYPOINT [ "python3" ]
