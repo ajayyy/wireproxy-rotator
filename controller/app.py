@@ -73,9 +73,14 @@ def pick_relay():
     print(f"Created a config to connect to {chosen_relay['country_name']} ({chosen_relay['city_name']}) - {public_key}")
 
 proxy_process = None
+starting_proxy = False
 
 def start_proxy():
-    global proxy_process
+    global proxy_process, starting_proxy
+    if starting_proxy:
+        return
+    
+    starting_proxy = True
 
     if proxy_process:
         signal.alarm(0)
@@ -89,6 +94,8 @@ def start_proxy():
     proxy_process = subprocess.Popen(["/usr/bin/wireproxy", "--config", "./config.conf"])
     signal.alarm(wait_time)
 
+    starting_proxy = False
+
 fail_count = 0
 success_count = 0
 last_reset = time.time()
@@ -97,6 +104,8 @@ def reset_if_needed():
     global fail_count, success_count, last_reset
 
     if time.time() - last_reset > failure_check_time:
+        last_reset = time.time()
+
         print(f"Fail count: {fail_count}, Success count: {success_count}")
         if fail_count > 5 and fail_count > success_count:
             # Try a new server
@@ -104,7 +113,6 @@ def reset_if_needed():
 
         fail_count = 0
         success_count = 0
-        last_reset = time.time()
 
 @app.post("/api/fail")
 def fail() -> RedirectResponse:
